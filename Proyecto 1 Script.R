@@ -1,13 +1,104 @@
-#Descarga de archivo HechosDeTransito2009.sav de GitHub
-download.file("https://github.com/DanielGarciaGiron/DataScienceProyecto1/raw/master/InfoProyecto/HechosDeTransito2009.sav",destfile = "./data/Crudos/HechosDeTransito/HechosDeTransito2009.sav")
 
+#Instalar e importar librerias necesarias para correr el programa
+for (libreria in c("memisc","filesstrings","openxlsx")) {
+  if (!require(libreria, character.only=T)) {
+    install.packages(libreria)
+    library(libreria, character.only=T)
+  }
+}
 
-#Importar libreria para leer archivos .sav
-library(memisc)
+#----------------- Convertir Fallecidos y Lesionados de .sav a .csv -----------------#
 
-#Convertir archivos .sav a .csv
-HDT2009 <- data.frame(as.data.set(spss.system.file("data/Crudos/HechosDeTransito/HechosDeTransito2009.sav")))
-HechosDeTransito2009 <- write.csv(HDT2009, file = "data/CSV/HechosDeTransito/HechosDeTransito2009.csv")
-library(readr)
-HechosDeTransito2009 <- read_csv("data/CSV/HechosDeTransito/HechosDeTransito2009.csv",locale = locale(encoding = "WINDOWS-1252"))
-View(HechosDeTransito2009)
+#Primero se crea una lista de todos los .sav en el folder, esta lee los .sav y los convierte a un data frame
+lista_FL_sav <- lapply(Sys.glob("data/Crudos/FallecidosLesionados/*.sav"), read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+
+#Se asignan nombres para cada elemento de la lista
+names(lista_FL_sav) <- c("Fallecidos2009","FallecidosLesionados2010","FallecidosLesionados2011","FallecidosLesionados2012","FallecidosLesionados2013","FallecidosLesionados2014","Lesionados2009")
+
+#Para cada elemento i de la lista, convertirlo a .csv y 
+#cambiarle el nombre de la extension de cada uno a .csv con el comando paste0.
+#Ya que los archivos se guardan en el directorio principal, con file.move se pasan al directorio especificado
+for(i in names(lista_FL_sav)){
+  write.csv(lista_FL_sav[[i]], paste0(i,".csv"))
+  file.move(paste0(i,".csv"),"data/CSV/FallecidosLesionados", overwrite = TRUE)
+}
+
+#----------------- Convertir Fallecidos y Lesionados de .xlsx a .csv -----------------#
+
+#Primero se crea una lista de todos los .xlsx en el folder, esta lee los .xlsx y los convierte a un data frame
+lista_FL_xlsx <- lapply(Sys.glob("data/Crudos/FallecidosLesionados/*.xlsx"), read.xlsx)
+
+#Se asignan nombres para cada elemento de la lista
+names(lista_FL_xlsx) <- c("FallecidosLesionados2015","FallecidosLesionados2016","FallecidosLesionados2017")
+
+#Para cada elemento i de la lista, convertirlo a .csv y 
+#cambiarle el nombre de la extension de cada uno a .csv con el comando paste0.
+#Ya que los archivos se guardan en el directorio principal, con file.move se pasan al directorio especificado
+for(i in names(lista_FL_xlsx)){
+  write.csv(lista_FL_xlsx[[i]], paste0(i,".csv"))
+  file.move(paste0(i,".csv"),"data/CSV/FallecidosLesionados", overwrite = TRUE)
+}
+
+#----------------- Convertir Hechos de Transito de .sav a .csv -----------------#
+
+#Primero se crea una lista de todos los .sav en el folder, esta lee los .sav y los convierte a un data frame
+lista_HDT_sav <- lapply(Sys.glob("data/Crudos/HechosDeTransito/*.sav"), read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+
+#Se asignan nombres para cada elemento de la lista
+names(lista_HDT_sav) <- c("HechosDeTransito2009","HechosDeTransito2010","HechosDeTransito2011","HechosDeTransito2012","HechosDeTransito2013","HechosDeTransito2014")
+
+#Para cada elemento i de la lista, convertirlo a .csv y 
+#cambiarle el nombre de la extension de cada uno a .csv con el comando paste0.
+#Ya que los archivos se guardan en el directorio principal, con file.move se pasan al directorio especificado
+for(i in names(lista_HDT_sav)){
+  write.csv(lista_HDT_sav[[i]], paste0(i,".csv"))
+  file.move(paste0(i,".csv"),"data/CSV/HechosDeTransito", overwrite = TRUE)
+}
+
+#----------------- Convertir Hechos de Transito de .xlsx a .csv -----------------#
+
+#Primero se crea una lista de todos los .xlsx en el folder, esta lee los .xlsx y los convierte a un data frame
+lista_HDT_xlsx <- lapply(Sys.glob("data/Crudos/HechosDeTransito/*.xlsx"), read.xlsx)
+
+#Se asignan nombres para cada elemento de la lista
+names(lista_HDT_xlsx) <- c("HechosDeTransito2015","HechosDeTransito2016","HechosDeTransito2017")
+
+#Para cada elemento i de la lista, convertirlo a .csv y 
+#cambiarle el nombre de la extension de cada uno a .csv con el comando paste0.
+#Ya que los archivos se guardan en el directorio principal, con file.move se pasan al directorio especificado
+for(i in names(lista_HDT_xlsx)){
+  write.csv(lista_HDT_xlsx[[i]], paste0(i,".csv"))
+  file.move(paste0(i,".csv"),"data/CSV/HechosDeTransito", overwrite = TRUE)
+}
+
+#----------------- Convertir VehiculosInvolucrados de .sav a .csv -----------------#
+
+#Primero se crea una lista de todos los .sav en el folder, esta lee los .sav y los convierte a un data frame
+lista_VI_sav <- lapply(Sys.glob("data/Crudos/VehiculosInvolucrados/*.sav"), read.spss, to.data.frame = TRUE, use.value.labels = FALSE)
+
+#Se asignan nombres para cada elemento de la lista
+names(lista_VI_sav) <- c("VehiculosInvolucrados2010","VehiculosInvolucrados2012","VehiculosInvolucrados2013","VehiculosInvolucrados2014")
+
+#Para cada elemento i de la lista, convertirlo a .csv y 
+#cambiarle el nombre de la extension de cada uno a .csv con el comando paste0.
+#Ya que los archivos se guardan en el directorio principal, con file.move se pasan al directorio especificado
+for(i in names(lista_VI_sav)){
+  write.csv(lista_VI_sav[[i]], paste0(i,".csv"))
+  file.move(paste0(i,".csv"),"data/CSV/VehiculosInvolucrados", overwrite = TRUE)
+}
+
+#----------------- Convertir Vehiculos Involucrados de .xlsx a .csv -----------------#
+
+#Primero se crea una lista de todos los .xlsx en el folder, esta lee los .xlsx y los convierte a un data frame
+lista_VI_xlsx <- lapply(Sys.glob("data/Crudos/VehiculosInvolucrados/*.xlsx"), read.xlsx)
+
+#Se asignan nombres para cada elemento de la lista
+names(lista_VI_xlsx) <- c("VehiculosInvolucrados2015","VehiculosInvolucrados2016","VehiculosInvolucrados2017")
+
+#Para cada elemento i de la lista, convertirlo a .csv y 
+#cambiarle el nombre de la extension de cada uno a .csv con el comando paste0.
+#Ya que los archivos se guardan en el directorio principal, con file.move se pasan al directorio especificado
+for(i in names(lista_VI_xlsx)){
+  write.csv(lista_VI_xlsx[[i]], paste0(i,".csv"))
+  file.move(paste0(i,".csv"),"data/CSV/VehiculosInvolucrados", overwrite = TRUE)
+}
