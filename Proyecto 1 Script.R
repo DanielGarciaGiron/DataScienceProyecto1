@@ -1,6 +1,6 @@
 
 #Instalar e importar librerias necesarias para correr el programa
-for (libreria in c("memisc","filesstrings","openxlsx")) {
+for (libreria in c("memisc","filesstrings","openxlsx","data.table")) {
   if (!require(libreria, character.only=T)) {
     install.packages(libreria)
     library(libreria, character.only=T)
@@ -9,11 +9,14 @@ for (libreria in c("memisc","filesstrings","openxlsx")) {
 
 
 #----------------- Descarga de datos y extraccion de los mismos     -----------------#
-
+#Se descarga el zip desde github. 
 download.file( url = "https://github.com/DanielGarciaGiron/DataScienceProyecto1/archive/Datos.zip", destfile = "data.zip" )
 
+#este archivo se descomprime, lo cual genera un folder llamado DataScienceProyecto1-Datos el cual tiene otro folder
+# "data" el cual contiene todos los archivos necesarios del proyecto.
 unzip( zipfile = "data.zip" )
 
+#se crean folders para guardar los resultados de las siguientes funciones.
 dir.create(file.path("DataScienceProyecto1-Datos/data", "CSV"))
 dir.create(file.path("DataScienceProyecto1-Datos/data", "Unificados"))
 dir.create(file.path("DataScienceProyecto1-Datos/data", "Resultado"))
@@ -114,3 +117,32 @@ for(i in names(lista_VI_xlsx)){
   write.csv(lista_VI_xlsx[[i]], paste0(i,".csv"))
   file.move(paste0(i,".csv"),"DataScienceProyecto1-Datos/data/CSV/VehiculosInvolucrados", overwrite = TRUE)
 }
+
+
+
+#----------------- Unificacion de archivos del mismo tipo -----------------#
+#Funcion encargada de leer todos los archivos en la direccion dada y unificarlos en un dataset unico.
+#si se tienen archivos nulos, estos se cambian a NA.
+multmerge=function(mypath) {
+  filenames=list.files(path=path, full.names=TRUE)
+  rbindlist(lapply(filenames, fread),fill = TRUE)
+  }
+
+#se generan los archivos unificados y se guardan en la carpeta de unificados.
+path <- "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/"
+FallecidosLesionadosUnificados = multmerge(path)
+write.csv(FallecidosLesionadosUnificados, file = "DataScienceProyecto1-Datos/data/Unificados/FallecidosLesionadosUnificados.csv")
+
+path <- "DataScienceProyecto1-Datos/data/CSV/HechosDeTransito/"
+HechosDeTransitoUnificados = multmerge(path)
+write.csv(HechosDeTransitoUnificados, file = "DataScienceProyecto1-Datos/data/Unificados/HechosDeTransitoUnificados.csv")
+
+path <- "DataScienceProyecto1-Datos/data/CSV/VehiculosInvolucrados/"
+VehiculosInvolucradosUnificados = multmerge(path)
+write.csv(VehiculosInvolucradosUnificados, file = "DataScienceProyecto1-Datos/data/Unificados/VehiculosInvolucradosUnificados.csv")
+
+#----------------- Limpieza de datos  -----------------#
+
+
+
+#----------------- Generacion del archivo final unificado  -----------------#
