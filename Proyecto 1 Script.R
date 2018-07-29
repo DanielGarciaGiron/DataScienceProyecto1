@@ -1,6 +1,6 @@
 
 #Instalar e importar librerias necesarias para correr el programa
-for (libreria in c("memisc","filesstrings","openxlsx","data.table")) {
+for (libreria in c("memisc","filesstrings","openxlsx","data.table","tidyr","dplyr")) {
   if (!require(libreria, character.only=T)) {
     install.packages(libreria)
     library(libreria, character.only=T)
@@ -133,7 +133,7 @@ multmerge=function(mypath) {
 fallecidos2009 = read.csv("DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Fallecidos2009.csv", header=T)
 lesionados2009 = read.csv("DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Lesionados2009.csv", header=T)
 FallecidosLesionados2009 = merge(fallecidos2009, lesionados2009, all = TRUE)
-write.csv(FallecidosLesionadosUnificados, file = "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/FallecidosLesionados2009.csv")
+write.csv(FallecidosLesionados2009, file = "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/FallecidosLesionados2009.csv")
 eliminarfallecidos2009 <- "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Fallecidos2009.csv"
 if (file.exists(eliminarfallecidos2009)) file.remove(eliminarfallecidos2009)
 eliminarlesionados2009 <- "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Lesionados2009.csv"
@@ -154,8 +154,35 @@ write.csv(VehiculosInvolucradosUnificados, file = "DataScienceProyecto1-Datos/da
 
 #----------------- Limpieza de datos  -----------------#
 
+#Unificacion de datos de Fallecidos y Lesionados
+FallecidosLesionadosLimpios <- FallecidosLesionadosUnificados
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "Dia", c("dia_ocu","día_ocu"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$Dia <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$Dia))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "DiaSemana", c("dia_sem_ocu","día_sem_ocu"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$DiaSemana <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$DiaSemana))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "CausaAccidente", c("causa_acc","Causa_acc", "casusa_acc"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$CausaAccidente <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$CausaAccidente))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "SexoPersona", c("sexo_pil","sexo_fall_les", "sexo_per", "sexo_víc","sexo_les"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$SexoPersona <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$SexoPersona))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "EdadPersona", c("edad_fall","edad_fall_les", "edad_pil", "edad_víc","edad_les"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$EdadPersona <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$EdadPersona))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "FallecidosLesionados", c("lesio_fall","Fallecidos_Lesionados","fall_les"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$FallecidosLesionados <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$FallecidosLesionados))
+
+#se elimina la primera columna del data set la cual contiene solamente numeros de fila (duplicada).
+FallecidosLesionadosLimpios <- FallecidosLesionadosLimpios[,-1]
+
+#Unificacion de datos de Hechos de transito
 
 
+
+#Unificacion de datos de Vehiculos implicados
 
 
 
