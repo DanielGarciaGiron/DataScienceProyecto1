@@ -128,6 +128,17 @@ multmerge=function(mypath) {
   rbindlist(lapply(filenames, fread),fill = TRUE)
   }
 
+
+#antes, se unen dos archivos del 2009 para crear uno solo y se eliminan los dos por separado.
+fallecidos2009 = read.csv("DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Fallecidos2009.csv", header=T)
+lesionados2009 = read.csv("DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Lesionados2009.csv", header=T)
+FallecidosLesionados2009 = merge(fallecidos2009, lesionados2009, all = TRUE)
+write.csv(FallecidosLesionadosUnificados, file = "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/FallecidosLesionados2009.csv")
+eliminarfallecidos2009 <- "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Fallecidos2009.csv"
+if (file.exists(eliminarfallecidos2009)) file.remove(eliminarfallecidos2009)
+eliminarlesionados2009 <- "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/Lesionados2009.csv"
+if (file.exists(eliminarlesionados2009)) file.remove(eliminarlesionados2009)
+
 #se generan los archivos unificados y se guardan en la carpeta de unificados.
 path <- "DataScienceProyecto1-Datos/data/CSV/FallecidosLesionados/"
 FallecidosLesionadosUnificados = multmerge(path)
@@ -145,4 +156,10 @@ write.csv(VehiculosInvolucradosUnificados, file = "DataScienceProyecto1-Datos/da
 
 
 
+
+
+
 #----------------- Generacion del archivo final unificado  -----------------#
+path <- "DataScienceProyecto1-Datos/data/Unificados/"
+DatosFinales = multmerge(path)
+write.csv(DatosFinales, file = "DataScienceProyecto1-Datos/data/Resultado/DatosFinales.csv")
