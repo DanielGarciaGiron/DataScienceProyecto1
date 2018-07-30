@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1532909603705.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3573176319",
+    "id" : "21048600",
+    "lastKnownWriteTime" : 1532927225,
+    "last_content_update" : 1532927225792,
+    "path" : "~/GitHub/DataScienceProyecto1/Proyecto 1 Script.R",
+    "project_path" : "Proyecto 1 Script.R",
+    "properties" : {
+        "cursorPosition" : "266,33",
+        "scrollLine" : "255"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
