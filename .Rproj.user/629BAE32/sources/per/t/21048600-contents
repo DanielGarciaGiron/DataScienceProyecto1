@@ -264,6 +264,11 @@ HechosDeTransitoLimpios$Núm_correlativo <- as.numeric(gsub("NA"," ",HechosDeTra
 #se elimina la primera columna del data set la cual contiene solamente numeros de fila (duplicada).
 HechosDeTransitoLimpios <- HechosDeTransitoLimpios[,-1]
 
+HechosDeTransitoLimpios[HechosDeTransitoLimpios == 99]<-NA
+HechosDeTransitoLimpios[HechosDeTransitoLimpios == 999]<-NA
+HechosDeTransitoLimpios[HechosDeTransitoLimpios == 9999]<-NA
+
+
 write.csv(HechosDeTransitoLimpios, file = "DataScienceProyecto1-Datos/data/UnificadosLimpios/HechosDeTransito.csv")
 
 #Unificacion de datos de Vehiculos implicados
