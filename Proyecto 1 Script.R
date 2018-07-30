@@ -201,6 +201,14 @@ FallecidosLesionadosLimpios <- subset(FallecidosLesionadosLimpios, select=-c(nú
 FallecidosLesionadosLimpios[FallecidosLesionadosLimpios == 99]<-NA
 FallecidosLesionadosLimpios[FallecidosLesionadosLimpios == 999]<-NA
 FallecidosLesionadosLimpios[FallecidosLesionadosLimpios == 9999]<-NA
+FallecidosLesionadosLimpios$SexoPersona[FallecidosLesionadosLimpios$SexoPersona==9] <- NA
+FallecidosLesionadosLimpios$mayor_menor[FallecidosLesionadosLimpios$mayor_menor==9] <- NA
+FallecidosLesionadosLimpios$g_edad_60ymás[FallecidosLesionadosLimpios$g_edad_60ymás==12] <- NA
+FallecidosLesionadosLimpios$g_edad_80ymás[FallecidosLesionadosLimpios$g_edad_80ymás==16] <- NA
+FallecidosLesionadosLimpios$edad_quinquenales[FallecidosLesionadosLimpios$edad_quinquenales==18] <- NA
+FallecidosLesionadosLimpios$g_modelo_veh[FallecidosLesionadosLimpios$g_modelo_veh==6] <- NA
+FallecidosLesionadosLimpios$g_edad[FallecidosLesionadosLimpios$g_edad==11] <- NA
+FallecidosLesionadosLimpios$estado_implicado[FallecidosLesionadosLimpios$estado_implicado==9] <- NA
 
 
 #Unificacion de datos de Hechos de transito
