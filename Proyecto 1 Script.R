@@ -160,8 +160,8 @@ FallecidosLesionadosLimpios <- FallecidosLesionadosUnificados
 FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "Dia", c("dia_ocu","día_ocu"), sep = " ", remove=TRUE)
 FallecidosLesionadosLimpios$Dia <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$Dia))
 
-FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "DiaSemana", c("dia_sem_ocu","día_sem_ocu"), sep = " ", remove=TRUE)
-FallecidosLesionadosLimpios$DiaSemana <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$DiaSemana))
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "Dia_Semana", c("dia_sem_ocu","día_sem_ocu"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$Dia_Semana <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$Dia_Semana))
 
 FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "CausaAccidente", c("causa_acc","Causa_acc", "casusa_acc"), sep = " ", remove=TRUE)
 FallecidosLesionadosLimpios$CausaAccidente <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$CausaAccidente))
@@ -169,14 +169,39 @@ FallecidosLesionadosLimpios$CausaAccidente <- as.numeric(gsub("NA"," ",Fallecido
 FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "SexoPersona", c("sexo_pil","sexo_fall_les", "sexo_per", "sexo_víc","sexo_les"), sep = " ", remove=TRUE)
 FallecidosLesionadosLimpios$SexoPersona <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$SexoPersona))
 
-FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "EdadPersona", c("edad_fall","edad_fall_les", "edad_pil", "edad_víc","edad_les"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "EdadPersona", c("edad_fall","edad_fall_les", "edad_pil", "edad_víc","edad_les","edad_per"), sep = " ", remove=TRUE)
 FallecidosLesionadosLimpios$EdadPersona <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$EdadPersona))
 
 FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "FallecidosLesionados", c("lesio_fall","Fallecidos_Lesionados","fall_les"), sep = " ", remove=TRUE)
 FallecidosLesionadosLimpios$FallecidosLesionados <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$FallecidosLesionados))
 
-#se elimina la primera columna del data set la cual contiene solamente numeros de fila (duplicada).
-FallecidosLesionadosLimpios <- FallecidosLesionadosLimpios[,-1]
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "MarcaVehiculo", c("marca_vehi","marca_veh"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$MarcaVehiculo <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$MarcaVehiculo))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "AreaGeografica", c("areag_ocu","área_geo_ocu"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$AreaGeografica <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$AreaGeografica))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "ColorVehiculo", c("color_vehi","color_veh"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$ColorVehiculo <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$ColorVehiculo))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "Municipio_Ocurrido", c("muni_ocu","mupio_ocu"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$Municipio_Ocurrido <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$Municipio_Ocurrido))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "TipoVehiculo", c("tipo_veh","tipo_vehi"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$TipoVehiculo <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$TipoVehiculo))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "GrupoEdad", c("g_edad_fall_les","Otro_g_edad_fall_les"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$GrupoEdad <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$GrupoEdad))
+
+FallecidosLesionadosLimpios = unite(FallecidosLesionadosLimpios, "GrupoEdad2", c("edad_m1","g_edad_2"), sep = " ", remove=TRUE)
+FallecidosLesionadosLimpios$GrupoEdad2 <- as.numeric(gsub("NA"," ",FallecidosLesionadosLimpios$GrupoEdad2))
+
+FallecidosLesionadosLimpios <- subset(FallecidosLesionadosLimpios, select=-c(núm_corre,num_corre,corre_base,num_correlativo,V1,num_hecho))
+
+FallecidosLesionadosLimpios[FallecidosLesionadosLimpios == 99]<-NA
+FallecidosLesionadosLimpios[FallecidosLesionadosLimpios == 999]<-NA
+FallecidosLesionadosLimpios[FallecidosLesionadosLimpios == 9999]<-NA
+
 
 #Unificacion de datos de Hechos de transito
 
