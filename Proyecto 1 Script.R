@@ -204,6 +204,8 @@ FallecidosLesionadosLimpios$SexoPersona[FallecidosLesionadosLimpios$SexoPersona=
 FallecidosLesionadosLimpios$mayor_menor[FallecidosLesionadosLimpios$mayor_menor==9] <- NA
 FallecidosLesionadosLimpios$g_modelo_veh[FallecidosLesionadosLimpios$g_modelo_veh==6] <- NA
 FallecidosLesionadosLimpios$Estado_piloto[FallecidosLesionadosLimpios$Estado_piloto==9] <- NA
+FallecidosLesionadosLimpios$año_ocu[FallecidosLesionadosLimpios$año_ocu==9] <- NA
+FallecidosLesionadosLimpios$int_o_noint[FallecidosLesionadosLimpios$int_o_noint==9] <- NA
 
 write.csv(FallecidosLesionadosLimpios, file = "DataScienceProyecto1-Datos/data/UnificadosLimpios/FallecidosLesionados.csv")
 
@@ -258,6 +260,7 @@ HechosDeTransitoLimpios[HechosDeTransitoLimpios == 9999]<-NA
 HechosDeTransitoLimpios$SexoPersona[HechosDeTransitoLimpios$SexoPersona==9] <- NA
 HechosDeTransitoLimpios$mayor_menor[HechosDeTransitoLimpios$mayor_menor==9] <- NA
 HechosDeTransitoLimpios$Estado_piloto[HechosDeTransitoLimpios$Estado_piloto==9] <- NA
+HechosDeTransitoLimpios$año_ocu[HechosDeTransitoLimpios$año_ocu==9] <- NA
 
 write.csv(HechosDeTransitoLimpios, file = "DataScienceProyecto1-Datos/data/UnificadosLimpios/HechosDeTransito.csv")
 
@@ -267,8 +270,8 @@ VehiculosInvolucradosLimpios <- VehiculosInvolucradosUnificados
 VehiculosInvolucradosLimpios = unite(VehiculosInvolucradosLimpios, "AreaGeografica", c("areag_ocu","área_geo_ocu"), sep = " ", remove=TRUE)
 VehiculosInvolucradosLimpios$AreaGeografica <- as.numeric(gsub("NA"," ",VehiculosInvolucradosLimpios$AreaGeografica))
 
-VehiculosInvolucradosLimpios = unite(VehiculosInvolucradosLimpios, "EdadConductor", c("edad_pil","edad_con","edad_per"), sep = " ", remove=TRUE)
-VehiculosInvolucradosLimpios$EdadConductor <- as.numeric(gsub("NA"," ",VehiculosInvolucradosLimpios$EdadConductor))
+VehiculosInvolucradosLimpios = unite(VehiculosInvolucradosLimpios, "EdadPersona", c("edad_pil","edad_con","edad_per"), sep = " ", remove=TRUE)
+VehiculosInvolucradosLimpios$EdadPersona <- as.numeric(gsub("NA"," ",VehiculosInvolucradosLimpios$EdadPersona))
 
 VehiculosInvolucradosLimpios = unite(VehiculosInvolucradosLimpios, "Estado_piloto", c("estado_pil","estado_con","condic_pil"), sep = " ", remove=TRUE)
 VehiculosInvolucradosLimpios$Estado_piloto <- as.numeric(gsub("NA"," ",VehiculosInvolucradosLimpios$Estado_piloto))
@@ -297,6 +300,9 @@ VehiculosInvolucradosLimpios$CausaAccidente <- as.numeric(gsub("NA"," ",Vehiculo
 VehiculosInvolucradosLimpios = unite(VehiculosInvolucradosLimpios, "MarcaVehiculo", c("marca_veh"), sep = " ", remove=TRUE)
 VehiculosInvolucradosLimpios$MarcaVehiculo <- as.numeric(gsub("NA"," ",VehiculosInvolucradosLimpios$MarcaVehiculo))
 
+VehiculosInvolucradosLimpios = unite(VehiculosInvolucradosLimpios, "Municipio_Ocurrido", c("mupio_ocu"), sep = " ", remove=TRUE)
+VehiculosInvolucradosLimpios$Municipio_Ocurrido <- as.numeric(gsub("NA"," ",VehiculosInvolucradosLimpios$Municipio_Ocurrido))
+
 VehiculosInvolucradosLimpios <- subset(VehiculosInvolucradosLimpios, select=-c(núm_corre,num_corre,corre_base,num_correlativo,V1,num_hecho))
 
 
@@ -308,11 +314,12 @@ VehiculosInvolucradosLimpios$SexoPersona[VehiculosInvolucradosLimpios$SexoPerson
 VehiculosInvolucradosLimpios$mayor_menor[VehiculosInvolucradosLimpios$mayor_menor==9] <- NA
 VehiculosInvolucradosLimpios$g_modelo_veh[VehiculosInvolucradosLimpios$g_modelo_veh==6] <- NA
 VehiculosInvolucradosLimpios$Estado_piloto[VehiculosInvolucradosLimpios$Estado_piloto==9] <- NA
+VehiculosInvolucradosLimpios$año_ocu[VehiculosInvolucradosLimpios$año_ocu==9] <- NA
 
 write.csv(VehiculosInvolucradosLimpios, file = "DataScienceProyecto1-Datos/data/UnificadosLimpios/VehiculosInvolucrados.csv")
 
 #----------------- Generacion del archivo final unificado  -----------------#
 path <- "DataScienceProyecto1-Datos/data/UnificadosLimpios/"
 DatosFinales = multmerge(path)
-DatosFinales <- subset(DatosFinales, select = -c(núm_corre,corre_base,num_correlativo,V1,V1,X,num_hecho,g_edad_80ymás,g_edad_60ymás,estado_implicado,g_edad_pil,edad_m1,g_edad,g_edad_2,edad_quinquenales,g_edad_fall_les,Otro_g_edad_fall_les,condicion_pil,g_hora_5,g_hora,mupio_ocu,grupo_mode_veh,g_modelo_veh))
+DatosFinales <- subset(DatosFinales, select = -c(núm_corre,corre_base,num_correlativo,V1,V1,X,num_hecho,g_edad_80ymás,g_edad_60ymás,estado_implicado,g_edad_pil,edad_m1,g_edad,g_edad_2,edad_quinquenales,g_edad_fall_les,Otro_g_edad_fall_les,condicion_pil,g_hora_5,g_hora,grupo_mode_veh,g_modelo_veh,num_vehí))
 write.csv(DatosFinales, file = "DataScienceProyecto1-Datos/data/Resultado/DatosFinales.csv")
